@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>NoteNoteTools</RootNamespace>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>dondow.snk</AssemblyOriginatorKeyFile>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <Company>Donald R Dow Jr</Company>
+    <Copyright>© 2024 All Rights Reserved, Donad R Dow Jr </Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <Optimize>False</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Interop.Microsoft.Office.Interop.OneNote">
+      <HintPath>Resources\Interop.Microsoft.Office.Interop.OneNote.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
