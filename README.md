@@ -3,6 +3,8 @@ This repository contains several VS c# projects that contain handy tools for man
 
 Note: Each project is in its own folder. 
 
+Please bear with me as this section is under construction. I hope to have it done time time in September 2024.  
+
 ## Tools Library
 This project contains the OneNote library that is used by the other OneNote tools application.
 
