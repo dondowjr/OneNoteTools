@@ -8,16 +8,19 @@
 
         public NameValue()
         {
-
+            // nothing
         }
+
         public NameValue(string name)
         {
+
             Name = name;
+
         }
 
-        public NameValue(string nameValuePair, string delim, bool isPair)
+        public NameValue(string nameValuePair, string delimiter, bool isPair)
         {
-            string[] parts = nameValuePair.Split(delim);
+            string[] parts = nameValuePair.Split(delimiter);
             Name = parts[0].Trim();
             if (parts.Length > 1)
             {
@@ -27,8 +30,10 @@
 
         public NameValue(string name, string id)
         {
+
             Name = name;
             Value = id;
+
         }
     }
 }

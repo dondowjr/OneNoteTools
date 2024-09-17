@@ -22,11 +22,14 @@ namespace OneNoteTools
 
         public PageInfo(XmlNode xml)
         {
+
             LoadByXML(xml);
+
         }
 
         private void LoadByXML(XmlNode xml)
         {
+
             foreach (XmlAttribute item in xml.Attributes)
             {
                 switch (item.Name.ToLower())
@@ -65,6 +68,7 @@ namespace OneNoteTools
                     }
                 }
             }
+
         }
 
         #endregion

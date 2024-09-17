@@ -1,9 +1,13 @@
 ﻿namespace OneNoteTools
 {
+    /// <summary>
+    /// This class contains extension methods.
+    /// </summary>
     public static class Extensions
     {
         public static List<string> GetInsideValues(this string value, string startTag, string endTag, bool incTags)
         {
+
             int s = 0;
             int e = 0;
             List<string> items = new List<string>();
@@ -45,16 +49,21 @@
 
         public static string GetInsideValue(this string value, string startTag, string endTag)
         {
+
             return GetInsideValue(value, startTag, endTag, false, false);
+
         }
 
         public static string GetInsideValue(this string value, string startTag, string endTag, bool incTags)
         {
+
             return GetInsideValue(value, startTag, endTag, incTags, false);
+
         }
 
         public static string GetInsideValue(this string value, string startTag, string endTag, bool includeTags, bool fromEnd)
         {
+
             int s = 0;
             int e = 0;
             string temp = string.Empty;
@@ -110,7 +119,9 @@
 
         public static string Decode(this string value)
         {
+
             return Uri.UnescapeDataString(value);
+
         }
 
         public static string Right(this string value, int chars)
@@ -123,9 +134,9 @@
             }
 
             return value;
+
         }
 
-        // todo: delete this routine?
         public static string Left(this string value, int chars)
         {
 
@@ -136,10 +147,12 @@
             }
 
             return value;
+
         }
 
         public static string CropRight(this string value, int chars)
         {
+
             if (!string.IsNullOrEmpty(value))
             {
                 if (value.Length > chars)
@@ -147,6 +160,8 @@
             }
 
             return value;
+
+
         }
 
         // todo: delete this routine?
@@ -161,12 +176,15 @@
             }
 
             return value;
+
         }
 
-        // todo: delete this routine?
+
         public static string[] Split(this string value, string separator)
         {
+
             return value.Split(separator.ToCharArray());
+
         }
 
     }

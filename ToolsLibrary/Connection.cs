@@ -2,11 +2,23 @@
 using System.Runtime.InteropServices;
 
 namespace OneNoteTools
-{/// <summary>
-/// The connection object is the top-most or start object for all other classes. 
-/// /// </summary>
+{
+    /// <summary>
+    /// The connection object is the top-most or start object for all other classes. 
+    /// To establish a connection to the OneNote client, simply create a new instance 
+    /// of this class.
+    /// </summary>
+   
     public class Connection : IDisposable
     {
+
+        // Notes:
+        // Since this library makes use of a onenote interop library provided by
+        // Microsoft, disposal of references need to be explicit and cannot rely
+        // on implicit garbage collection. Hence the need to implement the
+        // IDisposable pattern.
+
+
         public enum OneNoteObjType
         {
             Unknown,
@@ -64,7 +76,7 @@ namespace OneNoteTools
         #endregion
 
         #region - current items -
-        // methods to get objects that are currently display or running in the onemote client - 
+        // methods to get objects that are currently display or running in the onenote client - 
 
         /// <summary>
         /// Gets the Page ID for the currently displayed page.
@@ -82,20 +94,25 @@ namespace OneNoteTools
         /// </summary>
         public Page GetCurrentPage()
         {
+
             Page item = null;
+
             if (_oneNote.Windows.Count != 0)
             {
+
                 string itemId = _oneNote.Windows.CurrentWindow.CurrentPageId;
                 string data = null;
                 _oneNote.GetPageContent(itemId, out data);
                 item = new Page();
                 XMLHelper.GetPage(data, ref item);
+
             }
+
             return item;
         }
 
         /// <summary>
-        /// Gets the PAgeInfo object for thge currently displayed page.
+        /// Gets the PageInfo object for the currently displayed page.
         /// </summary>
         /// <returns></returns>
         public PageInfo GetCurrentPageInfo()
@@ -141,7 +158,7 @@ namespace OneNoteTools
         }
 
         /// <summary>
-        /// Gets the sectoin ID for the currently displayed page.
+        /// Gets the section ID for the currently displayed page.
         /// </summary>
         /// <returns></returns>
         public string GetCurrentSectionID()
@@ -153,7 +170,7 @@ namespace OneNoteTools
         }
 
         /// <summary>
-        /// Gets the sectoin group ID for the currently displayed page.
+        /// Gets the section group ID for the currently displayed page.
         /// </summary>
         /// <returns></returns>
         public string GetCurrentSectionGroupID()
@@ -167,7 +184,7 @@ namespace OneNoteTools
         #endregion
 
         #region - notebooks -
-        // methods to get notebook references from notenote
+        // methods to get notebook references from onenote
 
         /// <summary>
         /// Returns a notebook object for the given notebook ID.
@@ -434,7 +451,7 @@ namespace OneNoteTools
             // walk down the path to find the notebook ID based on name
             for (int i = 0; i < parts.Count; i++)
             {
-                if (notebookIDs.Keys.Contains(parts[i]))
+                if (notebookIDs.ContainsKey(parts[i]))
                 {
                     sectionID = FindSectionByPath(notebookIDs[parts[i]], parts, i + 1);
                     break;
@@ -451,10 +468,11 @@ namespace OneNoteTools
         /// <returns></returns>
         public string GetSectionPath(string id)
         {
-            string data;
+            // todo: This needs to be finished.
+            string data=null;
             // _oneNote.GetHierarchy(id, HierarchyScope.hsSelf , out data);
             // _oneNote.GetHierarchyParent()
-            return string.Empty;
+            return data;
         }
 
         private string FindSectionByPath(string id, List<string> parts, int partsIndex)
@@ -475,7 +493,7 @@ namespace OneNoteTools
                 XMLHelper.GetNameIDPairs(data, "one:SectionGroup", ref children);
 
             // walk down the path to find the notebook ID based on name
-            if (children.Keys.Contains(parts[partsIndex]))
+            if (children.ContainsKey(parts[partsIndex]))
             {
                 if (partsIndex == parts.Count - 1)
                     id = children[parts[partsIndex]];
@@ -496,7 +514,7 @@ namespace OneNoteTools
         /// </summary>
         /// <param name="link"></param>
         /// <returns></returns>
-        public LinkInfo GetLinkInfo(Hyperlink link)
+        public static LinkInfo GetLinkInfo(Hyperlink link)
         {
             return GetLinkInfo(link.Reference);
         }
@@ -506,7 +524,7 @@ namespace OneNoteTools
         /// </summary>
         /// <param name="link">Full hyperlink path</param>
         /// <returns></returns>
-        public LinkInfo GetLinkInfo(string link)
+        public static LinkInfo GetLinkInfo(string link)
         {
             return new LinkInfo(link);
         }

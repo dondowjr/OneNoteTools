@@ -20,6 +20,7 @@ namespace OneNoteTools
                 foreach (XmlNode item in xml.GetElementsByTagName(name))
                     items.Add(item.Attributes["name"].Value, item.Attributes["ID"].Value);
             }
+
         }
 
         public static void GetNameIDPairs(string xmlData, string xmlNodeNames, ref List<NameValue> items)
@@ -75,6 +76,7 @@ namespace OneNoteTools
 
         public static void GetPage(XmlNode xml, ref Page page)
         {
+
             if (xml.Name == "one:Page")
                 page.LoadByXML(xml);
             else
@@ -85,6 +87,7 @@ namespace OneNoteTools
                         GetPage(item, ref page);
                 }
             }
+
         }
 
         public static void GetHyperLinks(string xmlData, ref Page page)
@@ -106,6 +109,7 @@ namespace OneNoteTools
 
         public static void GetHyperLinksFromPageData(string xmlData, ref List<NameValue> list)
         {
+
             Hyperlink item = null;
             if (xmlData.IndexOf("href=") != -1)
             {
@@ -126,6 +130,7 @@ namespace OneNoteTools
                     item = null;
                 }
             }
+
         }
 
     }

@@ -7,6 +7,7 @@ namespace OneNoteTools
     /// </summary>
     public class Page
     {
+
         #region local vars
 
         private string _id;
@@ -26,7 +27,9 @@ namespace OneNoteTools
 
         public Page(XmlNode xml)
         {
+
             LoadByXML(xml);
+
         }
 
         public void LoadByXML(XmlNode xml)
@@ -43,6 +46,7 @@ namespace OneNoteTools
             GetGeneralInfo(xml);
             GetAuthorAndDates(xml);
             GetLinks(xml);
+
         }
 
         private void GetGeneralInfo(XmlNode xml)
@@ -77,6 +81,7 @@ namespace OneNoteTools
 
         private void GetAuthorAndDates(XmlNode xml)
         {
+
             // get page authors and dates (which is a child of the page object)
             if (xml.Name.ToLower() == "one:title")
             {
@@ -106,11 +111,12 @@ namespace OneNoteTools
                 foreach (XmlNode child in xml.ChildNodes)
                     GetAuthorAndDates(child);
             }
+
         }
 
         private void GetLinks(XmlNode xml)
         {
-            // todo:
+            // todo: finish this method?
         }
 
         #endregion

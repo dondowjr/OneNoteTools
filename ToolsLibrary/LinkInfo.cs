@@ -28,7 +28,6 @@ namespace OneNoteTools
         private LinkTypeEnum _linkType = LinkTypeEnum.Unknown;
         private string _externalPageID = string.Empty;
         private string _externalSectionID = string.Empty;
-        private string _emailUserID = string.Empty;
 
         #endregion
 
@@ -88,20 +87,25 @@ namespace OneNoteTools
 
         private void LoadWeb(string value)
         {
+
             _fullPath = value;
             _linkType = LinkTypeEnum.Web;
+
         }
 
         private void LoadMailTo(string value)
         {
+
             _fullPath = value;
             _linkType = LinkTypeEnum.MailTo;
+
         }
 
         #region load onenote
 
         private void LoadOneNote(string value)
         {
+
             // trim off the onenote: value
             if (value.Substring(0, 8).ToLower() == "onenote:")
                 value = value.Substring(8);
@@ -154,7 +158,6 @@ namespace OneNoteTools
         private void LoadExternalLocalLink(string value)
         {
 
-
             // strip the file marker
             if (value.Substring(0, 3) == "///")
                 value = value.Substring(3);
@@ -205,18 +208,19 @@ namespace OneNoteTools
         }
         private void LoadInternalLink(string value)
         {
+
             //onenote: 
             //          Quick Notes.one#
             //          OneNote Basics&amp;
             //          section-id={056D3E22-03DE-4702-967C-15853C254E9B}&amp;
             //          page-id={CB7E1C93-D2B1-4E33-89EC-5BBE2784C5F2}&amp;
-            //          base-path=//C:/Users/DRD/Documents/OneNote Notebooks/My Notebook
+            //          base-path=//C:/Users/xxx/Documents/OneNote Notebooks/My Notebook
 
             //onenote:
             //          New Section Group/New Section 1.one#
             //          section-id={3B94651F-B088-4F39-889B-588701EA239C}&amp;
             //          page-id={D940A443-BD05-40CF-B544-164DAFFEC77E}&amp;
-            //          base-path=//C:/Users/DRD/Documents/OneNote Notebooks/My Notebook
+            //          base-path=//C:/Users/xxx/Documents/OneNote Notebooks/My Notebook
 
             string file = string.Empty;
             string path = string.Empty;
@@ -249,16 +253,23 @@ namespace OneNoteTools
         #region properties
 
         public string LinkValue { get { return _linkValue; } }
+
         public string FullPath { get { return _fullPath; } }
-        public string FullPathPlainText
-        { get { return _fullPath.Decode(); } }
+
+        public string FullPathPlainText { get { return _fullPath.Decode(); } }
 
         public string SectionName { get { return _sectionName; } }
+
         public string PageName { get { return _pageName; } }
+
         public bool ExternalLink { get { return _externalLink; } }
+
         public bool WebLink { get { return _webLink; } }
+
         public LinkTypeEnum LinkType { get { return _linkType; } }
+
         public string ExternalPageID { get { return _externalPageID; } }
+
         public string ExternalSectionID { get { return _externalSectionID; } }
 
         #endregion

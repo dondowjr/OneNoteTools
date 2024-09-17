@@ -12,22 +12,24 @@ namespace OneNoteTools
 
         public static void ClearCache()
         {
+
             _resultCache.Clear();
+
         }
 
         public static bool CheckCache(string path, out bool evalResult)
         {
 
-            bool resp = false;
+            bool result = false;
             evalResult = false;
 
             if (_resultCache.ContainsKey(path))
             {
-                resp = true;
+                result = true;
                 evalResult = _resultCache[path];
             }
 
-            return resp;
+            return result;
 
         }
 
@@ -40,14 +42,16 @@ namespace OneNoteTools
                 if (!_resultCache.ContainsKey(path))
                     _resultCache.Add(path, evalResult);
             }
+
         }
 
         public static bool ValidateFile(LinkInfo info)
         {
-            bool resp = false;
 
-            if (CheckCache("file:" + info.FullPathPlainText, out resp))
-                return resp;
+            bool result = false;
+
+            if (CheckCache("file:" + info.FullPathPlainText, out result))
+                return result;
 
             try
             {
@@ -55,39 +59,40 @@ namespace OneNoteTools
             }
             catch (Exception) { }
 
-            AddToCache("file:" + info.FullPathPlainText, resp);
+            AddToCache("file:" + info.FullPathPlainText, result);
 
-            return resp;
+            return result;
         }
 
         public static bool ValidateDir(LinkInfo info)
         {
-            bool resp = false;
 
-            if (CheckCache("dir:" + info.FullPathPlainText, out resp))
-                return resp;
+            bool result = false;
+
+            if (CheckCache("dir:" + info.FullPathPlainText, out result))
+                return result;
 
             try
             {
-                resp = Directory.Exists(info.FullPathPlainText);
+                result = Directory.Exists(info.FullPathPlainText);
             }
             catch (Exception) { }
 
-            AddToCache("dir:" + info.FullPathPlainText, resp);
+            AddToCache("dir:" + info.FullPathPlainText, result);
 
-            return resp;
+            return result;
         }
 
         public static bool ValidateWeb(LinkInfo info)
         {
 
-            bool resp = false;
+            bool result = false;
             string address = info.FullPath;
             string original = address;
 
             // validate the full url
-            if (CheckCache("webfull:" + address, out resp))
-                return resp;
+            if (CheckCache("webfull:" + address, out result))
+                return result;
 
             if (ValidateURL(address))
             {
@@ -118,12 +123,12 @@ namespace OneNoteTools
             if (s > -1)
             {
 
-                if (CheckCache("webnoarg:" + address, out resp))
-                    return resp;
+                if (CheckCache("webnoarg:" + address, out result))
+                    return result;
 
                 if (ValidateURL(address))
                 {
-                    AddToCache("webfull:" + original, resp);
+                    AddToCache("webfull:" + original, result);
                     AddToCache("webnoarg:" + address, true);
                     return true;
                 }
@@ -133,12 +138,12 @@ namespace OneNoteTools
             if (address.Substring(0, 8) == "https://")
                 address = "http://" + address.Substring(8);
 
-            if (CheckCache("webhttp:" + address, out resp))
-                return resp;
+            if (CheckCache("webhttp:" + address, out result))
+                return result;
 
             if (ValidateURL(address))
             {
-                AddToCache("webfull:" + original, resp);
+                AddToCache("webfull:" + original, result);
                 AddToCache("webhttp:" + address, true);
                 return true;
             }
@@ -147,12 +152,12 @@ namespace OneNoteTools
             if (address.Substring(0, 7) == "http://")
                 address = address.Substring(7);
 
-            if (CheckCache("webnohttp:" + address, out resp))
-                return resp;
+            if (CheckCache("webnohttp:" + address, out result))
+                return result;
 
             if (ValidateURL(address))
             {
-                AddToCache("webfull:" + original, resp);
+                AddToCache("webfull:" + original, result);
                 AddToCache("webnohttp:" + address, true);
                 return true;
             }
@@ -160,42 +165,44 @@ namespace OneNoteTools
             // try with www
             address = "www." + address;
 
-            if (CheckCache("webwww:" + address, out resp))
-                return resp;
+            if (CheckCache("webwww:" + address, out result))
+                return result;
 
-            resp = ValidateURL(address);
+            result = ValidateURL(address);
 
-            AddToCache("webfull:" + original, resp);
+            AddToCache("webfull:" + original, result);
 
-            return resp;
+            return result;
 
         }
 
         public static bool PingWebSite(string address)
         {
 
-            bool resp = false;
+            bool result = false;
 
-            if (CheckCache("ping:" + address, out resp))
-                return resp;
+            if (CheckCache("ping:" + address, out result))
+                return result;
 
             try
             {
                 using (Ping ping = new Ping())
                 {
                     PingReply pResp = ping.Send(address);
-                    resp = (pResp.Status == IPStatus.Success);
+                    result = (pResp.Status == IPStatus.Success);
                 }
             }
             catch (Exception) { }
 
-            AddToCache("ping:" + address, resp);
+            AddToCache("ping:" + address, result);
 
-            return resp;
+            return result;
+
         }
 
         public static string GetDomainFromAddress(string address)
         {
+
             // strip arguments
             int s = -1;
             do
@@ -235,7 +242,8 @@ namespace OneNoteTools
 
         private static bool ValidateURL(string address)
         {
-            bool resp = false;
+
+            bool result = false;
 
             try
             {
@@ -250,15 +258,16 @@ namespace OneNoteTools
                 using (HttpWebResponse rep = (HttpWebResponse)req.GetResponse())
                 {
                     rep.Close();
-                    resp = true;
+                    result = true;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                resp = false;
+                result = false;
             }
 
-            return resp;
+            return result;
+
         }
 
         public static bool ValidateMailTo(LinkInfo info)
@@ -290,10 +299,11 @@ namespace OneNoteTools
 
         public static bool ValidatePage(LinkInfo info, Connection conn)
         {
-            bool resp = false;
 
-            if (CheckCache("page:" + info.FullPathPlainText, out resp))
-                return resp;
+            bool result = false;
+
+            if (CheckCache("page:" + info.FullPathPlainText, out result))
+                return result;
 
             string sectionID = string.Empty;
 
@@ -306,51 +316,55 @@ namespace OneNoteTools
                     {
                         if (item.Name == info.PageName)
                         {
-                            resp = true;
+                            result = true;
                             break;
                         }
                     }
                 }
             }
 
-            AddToCache("page:" + info.FullPathPlainText, resp);
+            AddToCache("page:" + info.FullPathPlainText, result);
 
-            return resp;
+            return result;
 
         }
 
         public static bool ValidateSection(LinkInfo info, Connection conn)
         {
-            bool resp = false;
 
-            if (CheckCache("section:" + info.FullPathPlainText, out resp))
-                return resp;
+            bool result = false;
+
+            if (CheckCache("section:" + info.FullPathPlainText, out result))
+                return result;
 
             if (info.ExternalLink)
             {
                 if (!string.IsNullOrEmpty(info.FullPathPlainText))
                 {
                     string id = conn.GetSectionID(info.FullPathPlainText);
-                    resp = !string.IsNullOrEmpty(id);
+                    result = !string.IsNullOrEmpty(id);
                 }
             }
             else
             {
-                resp = ValidateFile(info);
+                result = ValidateFile(info);
             }
 
-            AddToCache("section:" + info.FullPathPlainText, resp);
+            AddToCache("section:" + info.FullPathPlainText, result);
 
-            return resp;
+            return result;
+
         }
 
         public static bool ValidateGroup(LinkInfo info, Connection conn)
         {
 
-            bool resp = false;
+            //todo: Finish code?
 
-            if (CheckCache("group:" + info.FullPathPlainText, out resp))
-                return resp;
+            bool result = false;
+
+            if (CheckCache("group:" + info.FullPathPlainText, out result))
+                return result;
 
             if (info.ExternalLink)
             {
@@ -358,26 +372,27 @@ namespace OneNoteTools
             }
             else
             {
-                resp = ValidateDir(info);
+                result = ValidateDir(info);
             }
 
-            AddToCache("group:" + info.FullPathPlainText, resp);
+            AddToCache("group:" + info.FullPathPlainText, result);
 
-            return resp;
+            return result;
+
         }
 
         public static bool ValidateNotebook(LinkInfo info, Connection conn)
         {
-            bool resp = false;
+            //todo: Finish code?
 
-            if (CheckCache("notebook:" + info.FullPathPlainText, out resp))
-                return resp;
+            bool result = false;
 
-            //throw new NotImplementedException();
+            if (CheckCache("notebook:" + info.FullPathPlainText, out result))
+                return result;
 
-            AddToCache("notebook:" + info.FullPathPlainText, resp);
+            AddToCache("notebook:" + info.FullPathPlainText, result);
 
-            return resp;
+            return result;
 
         }
 

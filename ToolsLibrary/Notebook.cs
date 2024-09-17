@@ -16,6 +16,7 @@ namespace OneNoteTools
 
         private void LoadByXML(XmlNode xml)
         {
+
             foreach (XmlAttribute item in xml.Attributes)
             {
                 switch (item.Name.ToLower())
@@ -36,6 +37,7 @@ namespace OneNoteTools
                         break;
                 }
             }
+
         }
 
         public string ID
