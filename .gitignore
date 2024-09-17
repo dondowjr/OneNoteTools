@@ -362,3 +362,8 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 dondow.snk
+/ToolsLibrary/dondow.snk
+/TestApp/dondow.snk
+/SearchAndReplace/dondow.snk
+/SearchAndReplace/dondow.snk
+/LinkValidation/dondow.snk
