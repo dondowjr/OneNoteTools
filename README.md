@@ -17,4 +17,6 @@ It should be noted that at the time this project was created, OneNote did not ha
 
 This project represents a stand-alone app that allows users to validate internal and external links within a notebook. This is very useful when moving or curating repositories.  
 
-Other third-party tools claim to validate links, however, I've found them to be severely lacking in both scope and don't deliver on functionality. Note: You can use the search and replace tool to bulk-fix links that are broken because resources have moved.
+Other third-party tools claim to validate links, however, I've found them to be severely lacking in both scope and don't deliver on functionality. 
+
+Note: You can use the search and replace tool to bulk-fix links.
