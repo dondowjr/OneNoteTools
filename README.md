@@ -1,5 +1,5 @@
 ## Overview
-This repository contains several VS c# projects that contain handy tools for managing OneNote notebooks.  
+This repository contains several VS c# projects that represent handy tools (applications) for managing OneNote notebooks.  
 
 Note: Each project is in its own folder. 
 
